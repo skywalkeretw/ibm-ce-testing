@@ -1,0 +1,24 @@
+name: Depoly to Codeengine
+
+on:
+  push:
+    branch:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Get Source Code
+        uses: actions/checkout@v3
+
+      - name: Deploy function
+        uses: skywalkeretw/ibm-code-engine-github-action
+        with:
+          api-key: ${{ secrets.IBM_IAM_API_KEY }}
+          region: eu-de
+          project: LR-PR-EU-DE
+          entity: function
+          name: pyjoketest
+          runtime: python-3.11
