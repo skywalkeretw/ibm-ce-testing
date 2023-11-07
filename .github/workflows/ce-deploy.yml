@@ -2,7 +2,7 @@ name: Depoly to Codeengine
 
 on:
   push:
-    branch:
+    branches:
       - master
 
 jobs:
