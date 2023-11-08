@@ -6,6 +6,18 @@ on:
       - master
 
 jobs:
+  lol:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+    - name: test
+      run: |
+        FILE=""
+        echo "File -> $FILE"
+        FILE="asdf"
+        echo "File -> $FILE"
+
   deploy:
     runs-on: ubuntu-latest
     steps:
