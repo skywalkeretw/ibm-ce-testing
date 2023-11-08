@@ -34,9 +34,5 @@ jobs:
         entity: 'app'
         name: 'my-app'
         build-source: './app'
-        memory: '256Mi'
+        memory: '1G'
         cpu: '0.25'
-        configmap: 'my-configmap'
-        configmap-literal: |
-                        key1=value1
-                        key2=value2
