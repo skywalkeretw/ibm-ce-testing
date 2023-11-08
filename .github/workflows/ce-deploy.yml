@@ -47,10 +47,10 @@ jobs:
       uses: skywalkeretw/ibm-code-engine-github-action@v1
       with:
         api-key: ${{ secrets.IBM_IAM_API_KEY }}
-        resource-group: 'Default'
         region: 'eu-de'
         project: 'LR-PR-EU-DE'
         entity: 'fn'
+        runtime: python-3.11
         name: 'my-joke'
         build-source: './pyjokes'
       
