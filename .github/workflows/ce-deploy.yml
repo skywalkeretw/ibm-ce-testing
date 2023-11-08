@@ -13,7 +13,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Deploy to Code Engine
-      uses: skywalkeretw/code-engine-deploy-action@v1
+      uses: skywalkeretw/ibm-code-engine-github-action@v1
       with:
         api-key: ${{ secrets.IBM_CLOUD_API_KEY }}
         resource-group: 'Default'
