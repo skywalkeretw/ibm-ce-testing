@@ -36,3 +36,21 @@ jobs:
         build-source: './app'
         memory: '1G'
         cpu: '0.25'
+
+  bill:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Deploy to Code Engine
+      uses: skywalkeretw/ibm-code-engine-github-action@v1
+      with:
+        api-key: ${{ secrets.IBM_IAM_API_KEY }}
+        resource-group: 'Default'
+        region: 'eu-de'
+        project: 'LR-PR-EU-DE'
+        entity: 'fn'
+        name: 'my-joke'
+        build-source: './pyjokes'
+      
