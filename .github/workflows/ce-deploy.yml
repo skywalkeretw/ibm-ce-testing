@@ -6,91 +6,25 @@ on:
       - master
 
 jobs:
-  fn-python:
+  deploy:
     runs-on: ubuntu-latest
     steps:
+    - name: Check out code
+      uses: actions/checkout@v3
 
-      - name: Get Source Code
-        uses: actions/checkout@v3
-
-      - name: Deploy function
-        uses: skywalkeretw/ibm-code-engine-github-action@v1
-        with:
-          api-key: ${{ secrets.IBM_IAM_API_KEY }}
-          region: eu-de
-          project: LR-PR-EU-DE
-          entity: function
-          name: pyjoketest
-          runtime: python-3.11
-          build-source: ./pyjokes
-
-  fn-js:
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: Get Source Code
-        uses: actions/checkout@v3
-
-      - name: Deploy function
-        uses: skywalkeretw/ibm-code-engine-github-action@v1
-        with:
-          api-key: ${{ secrets.IBM_IAM_API_KEY }}
-          region: eu-de
-          project: LR-PR-EU-DE
-          entity: function
-          name: jsjoketest
-          runtime: nodejs-18
-          build-source: ./jsjokes
-
-  fn-js2:
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: Get Source Code
-        uses: actions/checkout@v3
-
-      - name: Deploy function
-        uses: skywalkeretw/ibm-code-engine-github-action@v1
-        with:
-          api-key: ${{ secrets.IBM_IAM_API_KEY }}
-          region: eu-de
-          project: LR-PR-EU-DE
-          entity: function
-          name: jsjoketest2
-          runtime: nodejs-18
-          build-source: ./jsjokes2
-
-  app:
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: Get Source Code
-        uses: actions/checkout@v3
-
-      - name: Deploy function
-        uses: skywalkeretw/ibm-code-engine-github-action@v1
-        with:
-          api-key: ${{ secrets.IBM_IAM_API_KEY }}
-          region: eu-de
-          project: LR-PR-EU-DE
-          entity: app
-          name: myapp
-          build-source: ./app
-
-  job:
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: Get Source Code
-        uses: actions/checkout@v3
-
-      - name: Deploy function
-        uses: skywalkeretw/ibm-code-engine-github-action@v1
-        with:
-          api-key: ${{ secrets.IBM_IAM_API_KEY }}
-          region: eu-de
-          project: LR-PR-EU-DE
-          entity: job
-          name: myjob
-          build-source: ./job
-  
+    - name: Deploy to Code Engine
+      uses: skywalkeretw/code-engine-deploy-action@v1
+      with:
+        api-key: ${{ secrets.IBM_CLOUD_API_KEY }}
+        resource-group: 'Default'
+        region: 'eu-de'
+        project: 'LR-PR-EU-DE'
+        entity: 'app'
+        name: 'my-app'
+        build-source: './app'
+        memory: '256Mi'
+        cpu: '0.25'
+        configmap: 'my-configmap'
+        configmap-literal: |
+                        key1=value1
+                        key2=value2
