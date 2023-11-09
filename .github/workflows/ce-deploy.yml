@@ -58,6 +58,8 @@ jobs:
         runtime: nodejs-18 
         name: 'fn-test-js'
         build-source: './jsjokes'
+        cpu: 1
+        memory: 4G
 
   fn-py:
     runs-on: ubuntu-latest
