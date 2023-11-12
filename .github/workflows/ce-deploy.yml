@@ -24,7 +24,7 @@ jobs:
         name: 'my-py-fn'
         build-source: './pyjokes'
 
-   app:
+  app:
     runs-on: ubuntu-latest
     steps:
     - name: Check out code
