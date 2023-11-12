@@ -22,4 +22,4 @@ jobs:
         entity: 'fn'
         runtime: python-3.11
         name: 'my-py-fn'
-        build-source: './py-func'
+        build-source: './pyjokes'
