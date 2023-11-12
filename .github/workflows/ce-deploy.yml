@@ -1,0 +1,25 @@
+name: Depoly to Code Engine
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+
+ fn-py:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Deploy Python Function to Code Engine
+      uses: skywalkeretw/ibm-code-engine-github-action@v1
+      with:
+        api-key: ${{ secrets.IBM_IAM_API_KEY }}
+        region: 'eu-de'
+        project: 'LR-PR-EU-DE'
+        entity: 'fn'
+        runtime: python-3.11
+        name: 'my-py-fn'
+        build-source: './py-func'
