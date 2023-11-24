@@ -26,6 +26,13 @@ runs:
 
   steps:
 
+  - name: Get Runtime info
+    id: runtime
+    shell: bash
+    run: |
+      echo "name=$(echo '${{ inputs.runtime }}' | cut -d'-' -f1)" >> "$GITHUB_OUTPUT"
+      echo "version=$(echo '${{ inputs.runtime }}' | cut -d'-' -f2)" >> "$GITHUB_OUTPUT"
+
   - name: Set test file
     id: test-file
     shell: bash
@@ -33,7 +40,7 @@ runs:
       if [[ "${{ inputs.test-file }}" != "" ]] ; then
           echo "test-file=${{ inputs.test-file }}" >> "$GITHUB_OUTPUT"
       else
-        case ${{ echo "${{ inputs.runtime }}" | cut -d'-' -f1 }} in
+        case ${{ steps.runtime.outputs.name }}" in
 
         python)
           echo "file=*test*.py" >> "$GITHUB_OUTPUT"
@@ -46,12 +53,6 @@ runs:
         esac
       fi
 
-  - name: Get Runtime info
-    id: runtime
-    shell: bash
-    run: |
-      echo "name=$(echo '${{ inputs.runtime }}' | cut -d'-' -f1)" >> "$GITHUB_OUTPUT"
-      echo "version=$(echo '${{ inputs.runtime }}' | cut -d'-' -f2)" >> "$GITHUB_OUTPUT"
 
   - name: Install Python
     uses: actions/setup-python@v4
