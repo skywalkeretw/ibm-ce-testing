@@ -33,6 +33,12 @@ runs:
       echo "name=$(echo '${{ inputs.runtime }}' | cut -d'-' -f1)" >> "$GITHUB_OUTPUT"
       echo "version=$(echo '${{ inputs.runtime }}' | cut -d'-' -f2)" >> "$GITHUB_OUTPUT"
 
+  - name: info
+    shell: bash
+    run: |
+      echo "${{ steps.runtime.outputs.name }}"
+      echo "${{ steps.runtime.outputs.version }}"
+
   - name: Set test file
     id: test-file
     shell: bash
@@ -40,7 +46,7 @@ runs:
       if [[ "${{ inputs.test-file }}" != "" ]] ; then
           echo "test-file=${{ inputs.test-file }}" >> "$GITHUB_OUTPUT"
       else
-        case ${{ steps.runtime.outputs.name }}" in
+        case "${{ steps.runtime.outputs.name }}" in
 
         python)
           echo "file=*test*.py" >> "$GITHUB_OUTPUT"
