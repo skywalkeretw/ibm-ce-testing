@@ -33,21 +33,16 @@ jobs:
         runtime: nodejs-18
         source-dir: js-fn-testing
 
-    - name: test content
-      run: |
-        touch js-fn-testing/myfile.txt
+  my-complex-py-func:
+    runs-on: ubuntu-latest
 
-    - name: test content
-      run: |
-        ls -lart js-fn-testing
+    steps:
 
-    # - name: Deploy JavaScript Function to Code Engine
-    #   uses: skywalkeretw/ibm-code-engine-github-action@v1
-    #   with:
-    #     api-key: ${{ secrets.IBM_IAM_API_KEY }}
-    #     region: 'eu-de'
-    #     project: 'LR-PR-EU-DE'
-    #     entity: 'fn'
-    #     runtime: nodejs-18
-    #     name: 'my-py-fn'
-    #     build-source: 'js-fn-testing'
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Run test
+      uses: ./.github/actions/fn-test
+      with:
+        runtime: python-3.11
+        source-dir: cpx-py-fn-testing
