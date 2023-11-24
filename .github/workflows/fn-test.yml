@@ -69,4 +69,4 @@ jobs:
         project: 'LR-PR-US-SOUTH'
         entity: 'fn'
         name: 'js-cpx'
-        build-source: './app'
+        build-source: './cpx-js-fn-testing'
