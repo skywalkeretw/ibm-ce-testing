@@ -84,7 +84,7 @@ runs:
     uses: actions/setup-node@v3
     if: steps.runtime.outputs.name == 'nodejs'
     with:
-      node-version: steps.runtime.outputs.version
+      node-version: "${{ steps.runtime.outputs.version }}"
 
   - name: Test Nodejs Function
     shell: bash
