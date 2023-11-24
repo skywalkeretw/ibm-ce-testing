@@ -20,7 +20,7 @@ jobs:
         runtime: python-3.11
         source-dir: py-fn-testing
 
-  test-js-function:
+  my-js-function:
     runs-on: ubuntu-latest
     steps:
 
@@ -32,3 +32,22 @@ jobs:
       with:
         runtime: nodejs-18
         source-dir: js-fn-testing
+
+    - name: test content
+      run: |
+        touch js-fn-testing/myfile.txt
+
+    - name: test content
+      run: |
+        ls -lart js-fn-testing
+
+    # - name: Deploy JavaScript Function to Code Engine
+    #   uses: skywalkeretw/ibm-code-engine-github-action@v1
+    #   with:
+    #     api-key: ${{ secrets.IBM_IAM_API_KEY }}
+    #     region: 'eu-de'
+    #     project: 'LR-PR-EU-DE'
+    #     entity: 'fn'
+    #     runtime: nodejs-18
+    #     name: 'my-py-fn'
+    #     build-source: 'js-fn-testing'
