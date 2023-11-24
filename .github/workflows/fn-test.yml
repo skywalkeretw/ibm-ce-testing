@@ -60,3 +60,13 @@ jobs:
       with:
         runtime: nodejs-18
         source-dir: cpx-js-fn-testing
+
+    - name: Deploy app to Code Engine
+      uses: skywalkeretw/ibm-code-engine-github-action@v1
+      with:
+        api-key: ${{ secrets.IBM_IAM_API_KEY }}
+        region: 'us-south'
+        project: 'LR-PR-US-SOUTH'
+        entity: 'fn'
+        name: 'js-cpx'
+        build-source: './app'
