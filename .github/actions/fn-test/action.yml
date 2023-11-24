@@ -26,6 +26,19 @@ runs:
 
   steps:
 
+  - name: Create Temp Dir
+    id: tempdir
+    working-directory: "${{ inputs.source-dir }}"
+    shell: bash
+    run: |
+      echo "name=$(mktemp -d)" >> "$GITHUB_OUTPUT"
+  
+  - name: Setup Temp Dir
+    working-directory: "${{ inputs.source-dir }}"
+    shell: bash
+    run: |
+      cp -r ./* ${{ steps.tempdir.outputs.name }}
+
   - name: Get Runtime info
     id: runtime
     shell: bash
@@ -60,13 +73,22 @@ runs:
         echo "test-file=${{ inputs.test-file }}" >> "$GITHUB_OUTPUT"
       fi
 
+# Install Required Programming Language
 
   - name: Install Python
     uses: actions/setup-python@v4
     if: steps.runtime.outputs.name == 'python'
     with:
       python-version: "${{ steps.runtime.outputs.version }}"
-  
+        
+  - name: Install Nodejs
+    uses: actions/setup-node@v3
+    if: steps.runtime.outputs.name == 'nodejs'
+    with:
+      node-version: "${{ steps.runtime.outputs.version }}"
+
+# Test the Function
+
   - name: Test Python Function
     shell: bash
     if: steps.runtime.outputs.name == 'python'
@@ -79,16 +101,10 @@ runs:
         fi
         mv __main__.py main__.py
         python ${{ steps.test-file.outputs.file }} -v
-        
-  - name: Install Nodejs
-    uses: actions/setup-node@v3
-    if: steps.runtime.outputs.name == 'nodejs'
-    with:
-      node-version: "${{ steps.runtime.outputs.version }}"
 
   - name: Test Nodejs Function
     shell: bash
-    working-directory: "${{ inputs.source-dir }}"
+    working-directory: "${{ steps.tempdir.outputs.name }}"
     if: steps.runtime.outputs.name == 'nodejs'
     run: |
       if [ -e "package.json" ]; then
@@ -96,3 +112,8 @@ runs:
       fi
       npm install mocha chai
       npx mocha ${{ steps.test-file.outputs.file }}
+
+  - name: Cleanup
+    shell: bash
+    run: |
+      rm -rf ${{ steps.tempdir.outputs.name }}
