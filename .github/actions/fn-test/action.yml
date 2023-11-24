@@ -75,7 +75,7 @@ runs:
         if [ -e "requirements.txt" ]; then
           virtualenv virtualenv
           source virtualenv/bin/activate
-          pip install -r requirements.txt"
+          pip install -r requirements.txt
         fi
         mv __main__.py main__.py
         python ${{ steps.test-file.outputs.file }} -v
