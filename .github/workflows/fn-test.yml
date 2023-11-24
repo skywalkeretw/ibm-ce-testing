@@ -7,23 +7,6 @@ on:
 
 jobs:
 
-  test-js-function:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Check out code
-      uses: actions/checkout@v3
-
-    - name: Install Nodejs
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
-
-    - name: Test Nodejs Function
-      working-directory: ./js-fn-testing
-      run: |
-        npm install mocha chai
-        npx mocha main.test.js
-
   test-py-function:
     runs-on: ubuntu-latest
     steps:
@@ -31,19 +14,13 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v3
 
-    - name: Install Python
-      uses: actions/setup-python@v4
+    - name: Run test
+      uses: ./.github/actions/fn-test
       with:
-        python-version: '3.10' 
-  
+        runtime: nodejs-3.11
+        source-dir: py-fn-testing
 
-    - name: Test Python Function
-      working-directory: ./py-fn-testing
-      run: |
-        mv __main__.py main__.py
-        python test_main.py -v
-
-  test:
+  test-js-function:
     runs-on: ubuntu-latest
     steps:
 
