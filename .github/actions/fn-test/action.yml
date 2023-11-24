@@ -65,12 +65,12 @@ runs:
     uses: actions/setup-python@v4
     if: steps.runtime.outputs.name == 'python'
     with:
-      python-version: steps.runtime.outputs.version
+      python-version: "${{ steps.runtime.outputs.version }}"
   
   - name: Test Python Function
     shell: bash
     if: steps.runtime.outputs.name == 'python'
-    working-directory: inputs.source-dir
+    working-directory: "${{ inputs.source-dir }}"
     run: |
         if [ -e "requirements.txt" ]; then
           virtualenv virtualenv
@@ -88,7 +88,7 @@ runs:
 
   - name: Test Nodejs Function
     shell: bash
-    working-directory: inputs.source-dir
+    working-directory: "${{ inputs.source-dir }}"
     if: steps.runtime.outputs.name == 'nodejs'
     run: |
       if [ -e "package.json" ]; then
