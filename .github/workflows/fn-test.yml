@@ -68,5 +68,6 @@ jobs:
         region: 'us-south'
         project: 'LR-PR-US-SOUTH'
         entity: 'fn'
+        runtime: 'nodejs-18'
         name: 'js-cpx'
         build-source: './cpx-js-fn-testing'
