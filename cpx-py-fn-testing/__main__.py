@@ -12,5 +12,5 @@ def main(params):
             'Content-Type': 'text/html; charset=utf-8',
         },
         "statusCode": 200,
-        "body": f"<html><body><h3>{msg}</h3></body></html>",
+        "body": f"{np.__version__}",
     }
