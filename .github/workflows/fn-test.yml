@@ -43,4 +43,15 @@ jobs:
         mv __main__.py main__.py
         python test_main.py -v
 
-  
+  test:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Check out code
+      uses: actions/checkout@v3  
+
+    - name: Run test
+      uses: ./.github/actions/fn-test
+      with:
+        runtime: nodejs-18
+        source-dir: js-fn-testing
