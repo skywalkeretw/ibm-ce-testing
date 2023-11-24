@@ -46,16 +46,23 @@ runs:
         esac
       fi
 
+  - name: Get Runtime info
+    id: runtime
+    shell: bash
+    run: |
+      echo "name=$(echo '${{ inputs.runtime }}' | cut -d'-' -f1)" >> "$GITHUB_OUTPUT"
+      echo "version=$(echo '${{ inputs.runtime }}' | cut -d'-' -f2)" >> "$GITHUB_OUTPUT"
+
   - name: Install Python
     uses: actions/setup-python@v4
-    if: inputs.runtime ==  echo "${{ inputs.runtime }}" | cut -d'-' -f1
+    if: steps.runtime.outputs.name == 'python'
     with:
-      python-version: echo "${{ inputs.runtime }}" | cut -d'-' -f2 
+      python-version: steps.runtime.outputs.version
   
   - name: Test Python Function
     shell: bash
-    if: inputs.runtime == 'python'
-    working-directory: inputs.runtime
+    if: steps.runtime.outputs.name == 'python'
+    working-directory: inputs.source-dir
     run: |
         if [ -e "requirements.txt" ]; then
           virtualenv virtualenv
@@ -67,14 +74,14 @@ runs:
         
   - name: Install Nodejs
     uses: actions/setup-node@v3
-    if: inputs.runtime == echo "${{ inputs.runtime }}" | cut -d'-' -f1
+    if: steps.runtime.outputs.name == 'nodejs'
     with:
-      node-version: echo "${{ inputs.runtime }}" | cut -d'-' -f2
+      node-version: steps.runtime.outputs.version
 
   - name: Test Nodejs Function
     shell: bash
-    working-directory: inputs.runtime
-    if: inputs.runtime == echo "${{ inputs.runtime }}" | cut -d'-' -f1
+    working-directory: inputs.source-dir
+    if: steps.runtime.outputs.name == 'nodejs'
     run: |
       if [ -e "package.json" ]; then
         npm install
