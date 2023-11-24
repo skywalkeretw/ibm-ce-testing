@@ -89,13 +89,17 @@ runs:
     if: steps.runtime.outputs.name == 'python'
     working-directory: "${{ inputs.source-dir }}"
     run: |
+        # check if requirements.txt exists and dependancies have to be installed
         if [ -e "requirements.txt" ]; then
           pip install virtualenv
           virtualenv virtualenv
           source virtualenv/bin/activate
           pip install -r requirements.txt
         fi
-        mv __main__.py main__.py
+        # check if the main file is called __main__.py if so rename it to main__.py so the test can be executed
+        if [ -e "__main__.py" ]; then
+          mv __main__.py main__.py      
+        fi
         python ${{ steps.test-file.outputs.file }} -v
 
   - name: Test Nodejs Function
