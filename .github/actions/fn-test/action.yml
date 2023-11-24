@@ -33,7 +33,7 @@ runs:
     run: |
       echo "name=$(mktemp -d)" >> "$GITHUB_OUTPUT"
   
-  - name: Setup Temp Dir
+  - name: Load Temp Dir
     working-directory: "${{ inputs.source-dir }}"
     shell: bash
     run: |
