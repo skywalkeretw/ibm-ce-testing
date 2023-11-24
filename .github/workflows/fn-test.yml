@@ -17,7 +17,7 @@ jobs:
     - name: Run test
       uses: ./.github/actions/fn-test
       with:
-        runtime: nodejs-3.11
+        runtime: python-3.11
         source-dir: py-fn-testing
 
   test-js-function:
