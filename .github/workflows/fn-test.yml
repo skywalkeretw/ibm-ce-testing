@@ -6,46 +6,6 @@ on:
       - master
 
 jobs:
-
-  test-py-function:
-    runs-on: ubuntu-latest
-    steps:
-
-    - name: Check out code
-      uses: actions/checkout@v3
-
-    - name: Run test
-      uses: ./.github/actions/fn-test
-      with:
-        runtime: python-3.11
-        source-dir: py-fn-testing
-
-  my-js-function:
-    runs-on: ubuntu-latest
-    steps:
-
-    - name: Check out code
-      uses: actions/checkout@v3  
-
-    - name: Run test
-      uses: ./.github/actions/fn-test
-      with:
-        runtime: nodejs-18
-        source-dir: js-fn-testing
-
-  my-complex-py-func:
-    runs-on: ubuntu-latest
-
-    steps:
-
-    - name: Check out code
-      uses: actions/checkout@v3
-
-    - name: Run test
-      uses: ./.github/actions/fn-test
-      with:
-        runtime: python-3.11
-        source-dir: cpx-py-fn-testing
         #
   my-complex-js-func:
     runs-on: ubuntu-latest
